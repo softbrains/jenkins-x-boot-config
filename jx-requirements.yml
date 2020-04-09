@@ -1,35 +1,53 @@
+autoUpdate:
+  enabled: false
+bootConfigURL: https://github.com/softbrains/jenkins-x-boot-config
 cluster:
-  clusterName: ""
-  environmentGitOwner: ""
-  environmentGitPublic: false
-  project: ""
-  provider: gke
-  zone: ""
-gitops: true
+  clusterName: EKS-RKRwetoQofbD
+  environmentGitOwner: ftl-group
+  gitKind: gitlab
+  gitName: gl
+  gitServer: https://gitlab.com
+  namespace: jx
+  provider: eks
+  region: eu-west-1
+  registry: 763365863673.dkr.ecr.eu-west-1.amazonaws.com
 environments:
 - key: dev
-- key: staging
+- key: staging 
 - key: production
+gitops: true
 ingress:
-  domain: ""
-  externalDNS: false
+  domain: k8s.ftl-oms.com
+  externalDNS: true
+  ignoreLoadBalancer: true
+  namespaceSubDomain: -jx.
   tls:
-    email: ""
-    enabled: false
-    production: false
+    email: junzhou.ren.work@gmail.com
+    enabled: true
+    production: true
 kaniko: true
-secretStorage: local
+repository: nexus
+secretStorage: vault
 storage:
+  backup:
+    enabled: true
+    url: s3://ftl-cloud-backup-b2dd218b-c079-4e78-bbbe-3e24ee46945f
   logs:
-    enabled: false
-    url: ""
+    enabled: true
+    url: s3://ftl-cloud-logs-008c4c42-219a-4463-92b0-ee822128a3d2
   reports:
-    enabled: false
-    url: ""
+    enabled: true
+    url: s3://ftl-cloud-reports-05862490-7289-4a95-88fc-c6897db87787
   repository:
-    enabled: false
-    url: ""
+    enabled: true
+    url: s3://ftl-cloud-repository-9ed3662f-1200-4c4b-a20e-29df8a889225
+vault:
+  aws:
+    iamUserName: renjunzhou
 versionStream:
   ref: "master"
   url: https://github.com/jenkins-x/jenkins-x-versions.git
-webhook: prow
+velero:
+  schedule: ""
+  ttl: ""
+webhook: lighthouse
